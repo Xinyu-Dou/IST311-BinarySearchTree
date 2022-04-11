@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class BinarySearchTree {
     protected Node root;
 
@@ -69,6 +71,33 @@ public class BinarySearchTree {
         return false;
     }
 
+    public BinarySearchTree rebalance(){
+        ArrayList<Node> old_tree = this.getOrderArray();
+        BinarySearchTree new_tree = new BinarySearchTree();
+        Integer size = old_tree.size();
+        Integer middle = size / 2;
+        Node<Integer> middle_node = old_tree.get(middle);
+        new_tree.insert(middle_node.data);
+        old_tree.remove(middle);
+        BinarySearchTree result = rebalanceHelper(old_tree, new_tree);
+        return result;
+    }
+
+    public BinarySearchTree rebalanceHelper(ArrayList<Node> list, BinarySearchTree new_tree){
+        if(list.size() == 1) {
+            Node toAdd = list.get(0);
+            new_tree.insert(toAdd.data);
+            return new_tree;
+        }
+        else{
+            Node toAdd = list.get(0);
+            list.remove(0);
+            BinarySearchTree result =  rebalanceHelper(list, new_tree);
+            result.insert(toAdd.data);
+            return result;
+        }
+    }
+
     public int minValue(Node curr_root, Node pre_root){
         int minimum = curr_root.data;
         while (curr_root.left != null){
@@ -104,6 +133,27 @@ public class BinarySearchTree {
             stringBuilder.append(this.inOrderTraversalNode(current.right));
         }
         return stringBuilder.toString();
+    }
+
+    // Get the data of the tree in ArrayList Format
+    public ArrayList getOrderArray(){
+        return this.getOrderArrayHelper(this.root);
+    }
+
+    private ArrayList getOrderArrayHelper(Node current){
+        ArrayList<Node> result = new ArrayList<Node>();
+
+        if(current != null){
+            //go left first because this is in order
+            result.addAll(this.getOrderArrayHelper(current.left));
+
+            //append the current node
+            result.add(current);
+
+            //go right
+            result.addAll(this.getOrderArrayHelper(current.right));
+        }
+        return result;
     }
 
 
