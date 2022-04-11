@@ -15,9 +15,9 @@ public class BinarySearchTree {
             return new Node(data);
         }
 
-        if (data.compareTo(current.data) == -1) {
+        if (data < current.data) {
             current.left = this.insertNode(current.left, data);
-        } else if (data.compareTo(current.data) == 1) {
+        } else if (data > current.data) {
             current.right = this.insertNode(current.right, data);
         }
 
@@ -29,31 +29,58 @@ public class BinarySearchTree {
     }
 
     public Node deleteNode(Node current, Integer data){
-        if(current.data == data){
-            Node result = current;
-            current.data = minValue(current.right);
-            return result;
-        }
-        if(current.data > data){
-            deleteNode(current.left,data);
-        }
-        else{
-            deleteNode(current.right,data);
+        try{
+            if (current == null) {
+                throw new IndexOutOfBoundsException();
+            }
+            if (current.data == data) {
+                Node result = current;
+                current.data = minValue(current.right, current);
+                return result;
+            }
+            if (current.data > data) {
+                deleteNode(current.left, data);
+            } else {
+                deleteNode(current.right, data);
+            }
+        }catch (Exception e){
+            System.out.println("This Album to delete is not in the tree!!");
         }
         return null;
     }
 
-    public int minValue(Node root){
-        int minimum = root.data;
-        while (root.left != null){
-            minimum = root.left.data;
-            root = root.left;
+    public boolean contains(Integer data){
+        return this.containsHelper(this.root, data);
+    }
+
+    private boolean containsHelper(Node current, Integer data){
+        if(current != null){
+            if(current.data == data){
+                return true;
+            }else{
+                if(data>current.data){
+                    return containsHelper(current.right, data);
+                }
+                else{
+                    return containsHelper(current.left, data);
+                }
+            }
         }
-        if(root.right != null){
-            root = root.right;
+        return false;
+    }
+
+    public int minValue(Node curr_root, Node pre_root){
+        int minimum = curr_root.data;
+        while (curr_root.left != null){
+            minimum = curr_root.left.data;
+            pre_root = curr_root;
+            curr_root = curr_root.left;
+        }
+        if(curr_root.right != null){
+            pre_root.right = curr_root.right;
         }
         else{
-            root = null;
+            pre_root.left = null;
         }
         return minimum;
     }
@@ -78,4 +105,6 @@ public class BinarySearchTree {
         }
         return stringBuilder.toString();
     }
+
+
 }
