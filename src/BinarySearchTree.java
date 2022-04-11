@@ -21,7 +21,7 @@ public class BinarySearchTree {
             current.right = this.insertNode(current.right, data);
         }
 
-        return null;
+        return current;
     }
 
     public Node delete(Integer data){
@@ -29,27 +29,18 @@ public class BinarySearchTree {
     }
 
     public Node deleteNode(Node current, Integer data){
-        if (root == null){
-            return root;
+        if(current.data == data){
+            Node result = current;
+            current.data = minValue(current.right);
+            return result;
         }
-
-        if(data < current.data){
-            current.left = this.insertNode(current.left, data);
+        if(current.data > data){
+            deleteNode(current.left,data);
         }
-
         else{
-            if (root.left == null){
-                return root.right;
-            }
-            else if (root.right == null){
-                return root.left;
-            }
-
-            //node with tw children
-            root.data = minValue(root.right);
-            root.right = deleteNode(root.right, root.data);
+            deleteNode(current.right,data);
         }
-        return root;
+        return null;
     }
 
     public int minValue(Node root){
@@ -58,7 +49,33 @@ public class BinarySearchTree {
             minimum = root.left.data;
             root = root.left;
         }
+        if(root.right != null){
+            root = root.right;
+        }
+        else{
+            root = null;
+        }
         return minimum;
     }
 
+    public String inOrderTraversal(){
+        return this.inOrderTraversalNode(this.root);
+    }
+
+    private String inOrderTraversalNode(Node current){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if(current != null){
+            //go left first because this is in order
+            stringBuilder.append(this.inOrderTraversalNode(current.left));
+
+            //append the current node
+            stringBuilder.append(current.data);
+            stringBuilder.append(" ");
+
+            //go right
+            stringBuilder.append(this.inOrderTraversalNode(current.right));
+        }
+        return stringBuilder.toString();
+    }
 }
