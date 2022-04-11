@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import static java.lang.Math.*;
 
 public class BinarySearchTree {
     protected Node root;
@@ -142,5 +143,89 @@ public class BinarySearchTree {
         }
         return result;
     }
+
+    public int getMaxDepth(){
+        return getMaxDepthHelper(this.root);
+    }
+
+    public int getMaxDepthHelper(Node current){
+        if(current == null){
+            return 0;
+        }
+        int left = getMaxDepthHelper(current.left);
+        int right = getMaxDepthHelper(current.right);
+        if(left > right){
+            return 1+left;
+        }
+        else{
+            return 1+right;
+        }
+    }
+
+    // Get which position contain a node.
+    // Return two arraylist, one contain all the position, one contain the node associate with the position.
+    public ArrayList<ArrayList> getPosition(){
+        return  getPositionHelper(this.root, 0);
+    }
+
+    private ArrayList<ArrayList> getPositionHelper(Node current, int position){
+        if(current  != null) {
+            ArrayList<Integer> position_list = new ArrayList<>();
+            ArrayList<Node> content = new ArrayList<>();
+            ArrayList<ArrayList> result = new ArrayList<>();
+
+            position_list.add(position);
+            content.add(current);
+
+            if(current.left != null) {
+                ArrayList<ArrayList> left_list = getPositionHelper(current.left, position * 2 + 1);
+                position_list.addAll(left_list.get(0));
+                content.addAll(left_list.get(1));
+            }
+            if(current.right != null){
+                ArrayList<ArrayList> right_list = getPositionHelper(current.right,position*2+2);
+                position_list.addAll(right_list.get(0));
+                content.addAll(right_list.get(1));
+            }
+
+            result.add(position_list);
+            result.add(content);
+
+            return result;
+        }
+        return null;
+
+    }
+
     
+
+    @Override
+    public String toString(){
+        int depth = getMaxDepth();
+        double total_node = Math.pow(2,depth)-1;
+        ArrayList<Node> result = new ArrayList<>();
+
+        ArrayList<ArrayList> tree_position = this.getPosition();
+        ArrayList<Node> nodes = tree_position.get(1);
+        ArrayList<Integer> node_posotion = tree_position.get(0);
+
+        for(int i = 0; i<total_node; i++){
+            if(node_posotion.contains(i)){
+                int index = node_posotion.indexOf(i);
+                result.add(nodes.get(index));
+            }
+            else{
+                result.add(null);
+            }
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = 0; i<result.size();i++){
+            stringBuilder.append(result.get(i));
+            stringBuilder.append(" ");
+        }
+
+        return stringBuilder.toString();
+    }
+
 }

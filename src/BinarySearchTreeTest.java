@@ -40,6 +40,7 @@ class BinarySearchTreeTest {
         tree.insert(13);
         tree.insert(4);
         System.out.print(tree.contains(9));
+        System.out.println(tree);
     }
 
     @Test
@@ -54,7 +55,6 @@ class BinarySearchTreeTest {
         tree.insert(7);
 
         BinarySearchTree result = tree.rebalance();
-        System.out.println(result.root);
-        System.out.println(result.root.right);
+        System.out.println(result);
     }
 }
