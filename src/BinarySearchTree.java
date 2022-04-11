@@ -197,7 +197,17 @@ public class BinarySearchTree {
 
     }
 
-    
+    public ArrayList<Integer> partition(Integer data){
+        ArrayList<Integer> compared = new ArrayList<Integer>();
+        ArrayList<Node> list = getOrderArray();
+        for(int i =0; i< list.size(); i++){
+            if(data< list.get(i).data){
+                compared.add(list.get(i).data);
+            }
+        }
+        return compared;
+
+    }
 
     @Override
     public String toString(){
