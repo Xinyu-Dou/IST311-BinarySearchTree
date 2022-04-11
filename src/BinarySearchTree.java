@@ -78,24 +78,11 @@ public class BinarySearchTree {
         Integer middle = size / 2;
         Node<Integer> middle_node = old_tree.get(middle);
         new_tree.insert(middle_node.data);
-        old_tree.remove(middle);
-        BinarySearchTree result = rebalanceHelper(old_tree, new_tree);
-        return result;
-    }
-
-    public BinarySearchTree rebalanceHelper(ArrayList<Node> list, BinarySearchTree new_tree){
-        if(list.size() == 1) {
-            Node toAdd = list.get(0);
-            new_tree.insert(toAdd.data);
-            return new_tree;
+        old_tree.remove(size / 2);
+        for(int i =0; i< old_tree.size();i++){
+            new_tree.insert(old_tree.get(i).data);
         }
-        else{
-            Node toAdd = list.get(0);
-            list.remove(0);
-            BinarySearchTree result =  rebalanceHelper(list, new_tree);
-            result.insert(toAdd.data);
-            return result;
-        }
+        return new_tree;
     }
 
     public int minValue(Node curr_root, Node pre_root){
@@ -155,6 +142,5 @@ public class BinarySearchTree {
         }
         return result;
     }
-
-
+    
 }

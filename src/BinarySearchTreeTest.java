@@ -55,7 +55,6 @@ class BinarySearchTreeTest {
 
         BinarySearchTree result = tree.rebalance();
         System.out.println(result.root);
-        System.out.println(result.root.left);
         System.out.println(result.root.right);
     }
 }
