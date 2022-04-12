@@ -2,36 +2,36 @@ import java.util.ArrayList;
 import static java.lang.Math.*;
 
 public class BinarySearchTree {
-    protected Node root;
+    protected Node<Album> root;
 
     public BinarySearchTree() {
         this.root = null;
     }
 
-    public void insert(Integer data) {
+    public void insert(Album data) {
         this.root = insertNode(this.root, data);
     }
 
-    private Node insertNode(Node current, Integer data) {
+    private Node insertNode(Node current, Album data) {
         //if the current is null, just return the node
         if (current == null) {
             return new Node(data);
         }
 
-        if (data < current.data) {
+        if (data.compareTo(current.data) == -1) {
             current.left = this.insertNode(current.left, data);
-        } else if (data > current.data) {
+        } else if (data.compareTo(current.data) == 1) {
             current.right = this.insertNode(current.right, data);
         }
 
         return current;
     }
 
-    public Node delete(Integer data){
+    public Node delete(Album data){
         return deleteNode(this.root, data);
     }
 
-    public Node deleteNode(Node current, Integer data){
+    public Node deleteNode(Node current, Album data){
         try{
             if (current == null) {
                 throw new IndexOutOfBoundsException();
@@ -41,7 +41,7 @@ public class BinarySearchTree {
                 current.data = minValue(current.right, current);
                 return result;
             }
-            if (current.data > data) {
+            if (current.data.compareTo(data) == 1) {
                 deleteNode(current.left, data);
             } else {
                 deleteNode(current.right, data);
@@ -52,16 +52,16 @@ public class BinarySearchTree {
         return null;
     }
 
-    public boolean contains(Integer data){
+    public boolean contains(Album data){
         return this.containsHelper(this.root, data);
     }
 
-    private boolean containsHelper(Node current, Integer data){
+    private boolean containsHelper(Node current, Album data){
         if(current != null){
             if(current.data == data){
                 return true;
             }else{
-                if(data>current.data){
+                if(data.compareTo(current.data) == 1){
                     return containsHelper(current.right, data);
                 }
                 else{
@@ -77,7 +77,7 @@ public class BinarySearchTree {
         BinarySearchTree new_tree = new BinarySearchTree();
         Integer size = old_tree.size();
         Integer middle = size / 2;
-        Node<Integer> middle_node = old_tree.get(middle);
+        Node<Album> middle_node = old_tree.get(middle);
         new_tree.insert(middle_node.data);
         old_tree.remove(size / 2);
         for(int i =0; i< old_tree.size();i++){
@@ -86,8 +86,8 @@ public class BinarySearchTree {
         return new_tree;
     }
 
-    public int minValue(Node curr_root, Node pre_root){
-        int minimum = curr_root.data;
+    public Album minValue(Node curr_root, Node pre_root){
+        Album minimum = curr_root.data;
         while (curr_root.left != null){
             minimum = curr_root.left.data;
             pre_root = curr_root;
@@ -129,14 +129,14 @@ public class BinarySearchTree {
     }
 
     private ArrayList getOrderArrayHelper(Node current){
-        ArrayList<Node> result = new ArrayList<Node>();
+        ArrayList<Album> result = new ArrayList<Album>();
 
         if(current != null){
             //go left first because this is in order
             result.addAll(this.getOrderArrayHelper(current.left));
 
             //append the current node
-            result.add(current);
+            result.add(current.data);
 
             //go right
             result.addAll(this.getOrderArrayHelper(current.right));
@@ -197,11 +197,11 @@ public class BinarySearchTree {
 
     }
 
-    public ArrayList<Integer> partition(Integer data){
-        ArrayList<Integer> compared = new ArrayList<Integer>();
+    public ArrayList<Album> partition(Album data){
+        ArrayList<Album> compared = new ArrayList<Album>();
         ArrayList<Node> list = getOrderArray();
         for(int i =0; i< list.size(); i++){
-            if(data< list.get(i).data){
+            if(data.compareTo(list.get(i).data) <= 0){
                 compared.add(list.get(i).data);
             }
         }

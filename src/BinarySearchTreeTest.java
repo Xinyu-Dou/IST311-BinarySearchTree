@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,51 +9,51 @@ class BinarySearchTreeTest {
     @org.junit.jupiter.api.Test
     void insert() {
         BinarySearchTree tree = new BinarySearchTree();
-        tree.insert(10);
-        tree.insert(9);
-        tree.insert(12);
-        tree.insert(13);
-        tree.insert(4);
+        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();
+        list.add("Halsey");
+        list.add("Cashmere Cat");
+        list2.add("Kanzaki Iori");
+        Album a1 = new Album(1,list,"Dreamland",8);
+        Album a2 = new Album(2,list2,"Killian",4);
+        Album a3 = new Album(3,list,"Manic",5);
+        tree.insert(a1);
+        tree.insert(a2);
+        tree.insert(a3);
+        ArrayList<Album> result= new ArrayList<Album>();
+        result.add(a2);
+        result.add(a3);
+        result.add(a1);
+        assertEquals(result, tree.getOrderArray());
         System.out.println(tree.getOrderArray());
+        System.out.println(tree);
     }
 
     @org.junit.jupiter.api.Test
     void delete() {
         BinarySearchTree tree = new BinarySearchTree();
-        tree.insert(10);
-        tree.insert(9);
-        tree.insert(12);
-        tree.insert(13);
-        tree.insert(4);
 
-        tree.delete(20);
         System.out.println(tree.inOrderTraversal());
     }
 
     @Test
     void contains() {
         BinarySearchTree tree = new BinarySearchTree();
-        tree.insert(10);
-        tree.insert(9);
-        tree.insert(12);
-        tree.insert(13);
-        tree.insert(4);
-        System.out.print(tree.contains(9));
+
         System.out.println(tree);
     }
 
     @Test
     void rebalance() {
         BinarySearchTree tree = new BinarySearchTree();
-        tree.insert(1);
-        tree.insert(2);
-        tree.insert(3);
-        tree.insert(4);
-        tree.insert(5);
-        tree.insert(6);
-        tree.insert(7);
 
-        BinarySearchTree result = tree.rebalance();
-        System.out.println(result);
+
+    }
+
+    @Test
+    void partition() {
+        BinarySearchTree tree = new BinarySearchTree();
+
+
     }
 }

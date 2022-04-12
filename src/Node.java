@@ -1,9 +1,9 @@
 public class Node<T> {
     Node<T> left;
     Node<T> right;
-    Integer data;
+    Album data;
 
-    public Node(Integer data){
+    public Node(Album data){
         this.left = null;
         this.right = null;
         this.data = data;
