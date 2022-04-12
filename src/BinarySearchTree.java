@@ -74,7 +74,7 @@ public class BinarySearchTree {
     }
 
     public BinarySearchTree rebalance(){
-        ArrayList<Node> old_tree = this.getOrderArray();
+        ArrayList<Node> old_tree = this.getOrderArrayNode();
         BinarySearchTree new_tree = new BinarySearchTree();
         Integer size = old_tree.size();
         Integer middle = size / 2;
@@ -125,20 +125,28 @@ public class BinarySearchTree {
         return stringBuilder.toString();
     }
 
+    public ArrayList<Album> getOrderArrayAlbum(){
+        ArrayList<Node> node_list = this.getOrderArrayNode();
+        ArrayList<Album> result = new ArrayList<>();
+        for(int i = 0;i < node_list.size();i++){
+            result.add(node_list.get(i).data);
+        }
+        return result;
+    }
     // Get the data of the tree in ArrayList Format
-    public ArrayList getOrderArray(){
+    public ArrayList<Node> getOrderArrayNode(){
         return this.getOrderArrayHelper(this.root);
     }
 
-    private ArrayList getOrderArrayHelper(Node current){
-        ArrayList<Album> result = new ArrayList<Album>();
+    private ArrayList<Node> getOrderArrayHelper(Node current){
+        ArrayList<Node> result = new ArrayList<Node>();
 
         if(current != null){
             //go left first because this is in order
             result.addAll(this.getOrderArrayHelper(current.left));
 
             //append the current node
-            result.add(current.data);
+            result.add(current);
 
             //go right
             result.addAll(this.getOrderArrayHelper(current.right));
@@ -201,7 +209,7 @@ public class BinarySearchTree {
 
     public ArrayList<Album> partition(Album data){
         ArrayList<Album> compared = new ArrayList<Album>();
-        ArrayList<Node> list = getOrderArray();
+        ArrayList<Node> list = getOrderArrayNode();
         for(int i =0; i< list.size(); i++){
             if(data.compareTo(list.get(i).data) <= 0){
                 compared.add(list.get(i).data);

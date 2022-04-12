@@ -24,8 +24,8 @@ class BinarySearchTreeTest {
         result.add(a2);
         result.add(a3);
         result.add(a1);
-        assertEquals(result, tree.getOrderArray());
-        System.out.println(tree.getOrderArray());
+        assertEquals(result, tree.getOrderArrayAlbum());
+        System.out.println(tree.getOrderArrayNode());
         System.out.println(tree);
     }
 
@@ -45,9 +45,7 @@ class BinarySearchTreeTest {
         tree.insert(a2);
         tree.insert(a3);
         tree.insert(a4);
-        System.out.println(tree.getOrderArray());
         assertEquals(a3,tree.delete(a3).data);
-        System.out.println(tree.getOrderArray());
     }
 
     @Test
@@ -103,6 +101,11 @@ class BinarySearchTreeTest {
         tree.insert(a2);
         tree.insert(a3);
         tree.insert(a4);
-
+        System.out.println(tree.partition(a3));
+        BinarySearchTree result = new BinarySearchTree();
+        result.insert(a1);
+        result.insert(a3);
+        result.insert(a4);
+        assertEquals(result.getOrderArrayAlbum(),tree.partition(a3));
     }
 }
