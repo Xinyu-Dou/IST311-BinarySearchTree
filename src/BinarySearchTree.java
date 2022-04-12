@@ -32,19 +32,20 @@ public class BinarySearchTree {
     }
 
     public Node deleteNode(Node current, Album data){
+        Node<Album> result = new Node<Album>(null);
         try{
             if (current == null) {
                 throw new IndexOutOfBoundsException();
             }
             if (current.data == data) {
-                Node result = current;
+                result.data = current.data;
                 current.data = minValue(current.right, current);
                 return result;
             }
             if (current.data.compareTo(data) == 1) {
-                deleteNode(current.left, data);
+                return deleteNode(current.left, data);
             } else {
-                deleteNode(current.right, data);
+                return deleteNode(current.right, data);
             }
         }catch (Exception e){
             System.out.println("This Album to delete is not in the tree!!");
@@ -209,6 +210,8 @@ public class BinarySearchTree {
 
     }
 
+    //Extra credit toString()
+    //Return a string representation
     @Override
     public String toString(){
         int depth = getMaxDepth();

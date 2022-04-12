@@ -75,7 +75,7 @@ public class Album implements Comparable<Album>{
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format(" %d: %d -- [%s] ",this.getID(),this.getNumSong(),this.getNameString()));
+        stringBuilder.append(String.format("[ %d: %d -- [%s]]",this.getID(),this.getNumSong(),this.getNameString()));
         return stringBuilder.toString();
     }
 
