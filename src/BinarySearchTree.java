@@ -37,7 +37,7 @@ public class BinarySearchTree {
             if (current == null) {
                 throw new IndexOutOfBoundsException();
             }
-            if (current.data == data) {
+            if (current.data.compareTo(data) == 0) {
                 result.data = current.data;
                 current.data = minValue(current.right, current);
                 return result;
@@ -98,7 +98,8 @@ public class BinarySearchTree {
             pre_root.right = curr_root.right;
         }
         else{
-            pre_root.left = null;
+            pre_root.data = curr_root.data;
+            pre_root.right = curr_root.right;
         }
         return minimum;
     }
